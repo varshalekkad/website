@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crop Advisor</title>
+<style>
+/* ---------- GLOBAL STYLES ---------- */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #4caf50, #8bc34a);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ---------- APP CONTAINER ---------- */
+.app {
+  background: white;
+  width: 420px;
+  max-width: 95%;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* ---------- HEADINGS ---------- */
+h1 {
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  color: #333;
+}
+
+/* ---------- INPUTS & SELECT ---------- */
+input, select {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+/* ---------- BUTTON ---------- */
+button {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1b5e20;
+}
+
+/* ---------- RESULT ---------- */
+#result {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ---------- ANIMATION ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <h1>Crop Advisor</h1>
+  <p>Select a crop, soil type, and weather to get suggestions.</p>
+  
+  <select id="crop">
+    <option value="">--Select Crop--</option>
+    <option value="rice">Rice</option>
+    <option value="wheat">Wheat</option>
+    <option value="maize">Maize</option>
+    <option value="cotton">Cotton</option>
+    <option value="pest">Pest Control</option>
+  </select>
+  
+  <input type="text" id="soil" placeholder="Enter soil type (sandy, clay, loam)">
+  <input type="text" id="weather" placeholder="Enter weather (hot, rainy, cool)">
+  
+  <button onclick="analyzeCrop()">Analyze</button>
+  
+  <div id="result"></div>
+</div>
+
+<script>
+function analyzeCrop() {
+  let crop = document.getElementById("crop").value.toLowerCase();
+  let soil = document.getElementById("soil").value.toLowerCase();
+  let weather = document.getElementById("weather").value.toLowerCase();
+  let r = "";
+
+  // crop suggestions
+  if (crop === "rice") r = "🌾 Rice grows best in clay soil and requires standing water (rainy season).";
+  else if (crop === "wheat") r = "🌾 Wheat prefers loamy soil and cool climate (Rabi season).";
+  else if (crop === "maize") r = "🌽 Maize needs well-drained soil and warm weather.";
+  else if (crop === "cotton") r = "👕 Cotton grows best in black soil with hot climate.";
+  else if (crop === "pest") r = "🐛 Use eco-friendly pesticides like Neem extract. Rotate crops to reduce pests.";
+  else if (crop === "") r = "⚠ Please select a crop.";
+  else r = "🤖 No info available. Try another crop.";
+
+  // soil hints
+  if (soil.includes("sandy")) r += " 🌱 Sandy soil is good for groundnuts & millets.";
+  if (soil.includes("clay")) r += " 🌱 Clay soil is water-retentive, good for rice.";
+  if (soil.includes("loam")) r += " 🌱 Loamy soil is fertile, best for wheat & vegetables.";
+
+  // weather hints
+  if (weather.includes("hot")) r += " ☀ Hot climate is good for cotton & maize.";
+  if (weather.includes("rainy")) r += " 🌧 Rainy season supports rice & sugarcane.";
+  if (weather.includes("cool")) r += " ❄ Cool weather is suitable for wheat.";
+
+  document.getElementById("result").innerText = r;
+}
+</script>
+
+</body>
+</html>
